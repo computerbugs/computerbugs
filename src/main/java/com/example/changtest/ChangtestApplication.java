@@ -7,6 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ChangtestApplication {
 
 	public static void main(String[] args) {
+	    Line a = new Line();
+	    String aaa = a.getLineCode();
+	    System.out.println(aaa);
+
 		SpringApplication.run(ChangtestApplication.class, args);
 	}
 
