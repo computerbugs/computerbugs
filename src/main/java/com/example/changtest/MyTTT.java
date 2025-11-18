@@ -10,6 +10,10 @@ public class MyTTT {
 
     public MyTTT() {
         System.out.println("asdsawew");
+        System.out.println("asdsawew");
+
+        System.out.println("asdsawew");
+
         // TODO Auto-generated constructor stub
     }
 
