@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>欢迎</title>
     <style>
         * {
@@ -32,18 +32,17 @@
         .welcome-container h1 {
             font-size: 2.5rem;
             color: #333;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
         }
 
-        .welcome-container h1 .wave {
-            display: inline-block;
-            animation: wave 1.5s ease-in-out infinite;
+        .welcome-container .user-greeting {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 24px;
         }
 
-        @keyframes wave {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(20deg); }
-            75% { transform: rotate(-20deg); }
+        .welcome-container .user-greeting strong {
+            color: #667eea;
         }
 
         .welcome-container p {
@@ -67,14 +66,35 @@
             border-radius: 20px;
             font-size: 0.9rem;
         }
+
+        .logout-link {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 8px 24px;
+            background: transparent;
+            color: #999;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .logout-link:hover {
+            color: #dc2626;
+            border-color: #dc2626;
+        }
     </style>
 </head>
 <body>
     <div class="welcome-container">
-        <h1>欢迎 <span class="wave">👋</span></h1>
+        <h1>欢迎 👋</h1>
+        <p class="user-greeting">你好，<strong th:text="${username}">用户</strong>！</p>
         <p>🎉 服务已成功启动，一切运行正常！</p>
         <p class="subtitle">Spring Boot Application · changtest</p>
         <span class="status">● 运行中</span>
+        <br />
+        <a href="/logout" class="logout-link">退出登录</a>
     </div>
 </body>
 </html>
