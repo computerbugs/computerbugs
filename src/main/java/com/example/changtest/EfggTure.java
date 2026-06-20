@@ -22,14 +22,40 @@ public class EfggTure {
         return sdf.format(date);
     }
 
+    private static final String[] DATE_PATTERNS = {
+        "yyyy-MM-dd",
+        "yyyy/MM/dd",
+        "yyyy年MM月dd日",
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy/MM/dd HH:mm:ss",
+        "yyyy年MM月dd日 HH:mm:ss",
+        "yyyyMMdd",
+        "yyyyMMddHHmmss"
+    };
+
     public static boolean isDate(String dateStr) {
-        Pattern pattern = Pattern.compile("");
-        Matcher matcher = pattern.matcher(dateStr);
-        return matcher.matches();
+        if (dateStr == null) {
+            throw new NullPointerException("dateStr must not be null");
+        }
+        if (dateStr.trim().isEmpty()) {
+            return false;
+        }
+        for (String pattern : DATE_PATTERNS) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+                sdf.setLenient(false);
+                sdf.parse(dateStr);
+                return true;
+            } catch (ParseException ignored) {
+                // 尝试下一个模式
+            }
+        }
+        return false;
     }
 
     public static String covertDateStrFormat(String dateStr, String srcFormat, String descFormat) throws Exception {
         SimpleDateFormat format_src = new SimpleDateFormat(srcFormat);
+        format_src.setLenient(false);
         SimpleDateFormat format_desc = new SimpleDateFormat(descFormat);
         try {
             Date date = format_src.parse(dateStr);

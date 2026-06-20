@@ -1,0 +1,5 @@
+2026-06-20T15:21:04Z [ALLOW] ls /Users/changjiasheng/gitcode/changtest/target/surefire-reports/*.txt 2>/dev/null
+2026-06-20T15:21:07Z [ALLOW] for f in /Users/changjiasheng/gitcode/changtest/target/surefire-reports/*.txt; do echo \
+2026-06-20T15:22:46Z [ALLOW] mvn test -DskipInstall 2>&1 | tail -50
+2026-06-20T15:24:11Z [ALLOW] git diff --stat
+2026-06-20T15:24:28Z [ALLOW] git add -A && git commit -m \

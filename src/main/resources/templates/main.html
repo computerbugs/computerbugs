@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>欢迎</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 60px 80px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+        }
+
+        .welcome-container h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .welcome-container .user-greeting {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 24px;
+        }
+
+        .welcome-container .user-greeting strong {
+            color: #667eea;
+        }
+
+        .welcome-container p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .welcome-container .subtitle {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            color: #999;
+        }
+
+        .welcome-container .status {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 8px 20px;
+            background: #4ade80;
+            color: #fff;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .logout-link {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 8px 24px;
+            background: transparent;
+            color: #999;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .logout-link:hover {
+            color: #dc2626;
+            border-color: #dc2626;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>欢迎 👋</h1>
+        <p class="user-greeting">你好，<strong th:text="${username}">用户</strong>！</p>
+        <p>🎉 服务已成功启动，一切运行正常！</p>
+        <p class="subtitle">Spring Boot Application · changtest</p>
+        <span class="status">● 运行中</span>
+        <br />
+        <a href="/logout" class="logout-link">退出登录</a>
+    </div>
+</body>
+</html>
