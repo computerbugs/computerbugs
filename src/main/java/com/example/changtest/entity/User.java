@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -24,11 +24,12 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = new Date();
     }
 }
