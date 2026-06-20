@@ -38,9 +38,9 @@ public class AuthenticationFilter implements Filter {
             }
         }
 
-        // Check session for logged-in user
+        // Check session for logged-in user (stored as userId, not the full User entity)
         HttpSession session = httpRequest.getSession(false);
-        if (session != null && session.getAttribute("user") != null) {
+        if (session != null && session.getAttribute("userId") != null) {
             chain.doFilter(request, response);
         } else {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");

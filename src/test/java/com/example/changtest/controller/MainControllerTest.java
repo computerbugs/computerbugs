@@ -1,6 +1,5 @@
 package com.example.changtest.controller;
 
-import com.example.changtest.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -45,13 +44,9 @@ public class MainControllerTest {
         @Test
         @DisplayName("GET /main - 有session时显示用户名")
         void testMainPageWithSession() throws Exception {
-            User user = new User();
-            user.setId(1L);
-            user.setUsername("testuser");
-            user.setPassword("encoded");
-
             MockHttpSession session = new MockHttpSession();
-            session.setAttribute("user", user);
+            // 新方案: 仅存储 username 字符串，不存储整个 User 实体
+            session.setAttribute("username", "testuser");
 
             mockMvc.perform(get("/main").session(session))
                     .andExpect(status().isOk())
@@ -69,10 +64,10 @@ public class MainControllerTest {
         }
 
         @Test
-        @DisplayName("GET /main - session中user为null")
+        @DisplayName("GET /main - session中username为null")
         void testMainPageWithNullUser() throws Exception {
             MockHttpSession session = new MockHttpSession();
-            session.setAttribute("user", null);
+            session.setAttribute("username", null);
 
             mockMvc.perform(get("/main").session(session))
                     .andExpect(status().isOk())

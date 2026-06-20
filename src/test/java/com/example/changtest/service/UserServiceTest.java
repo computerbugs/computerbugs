@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -25,10 +26,11 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Spy
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+
     @InjectMocks
     private UserService userService;
-
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
 
     // ======================== register 测试 ========================
 
@@ -205,7 +207,7 @@ public class UserServiceTest {
             mockUser = new User();
             mockUser.setId(1L);
             mockUser.setUsername("testuser");
-            mockUser.setPassword(encoder.encode(rawPassword));
+            mockUser.setPassword(passwordEncoder.encode(rawPassword));
         }
 
         @Test

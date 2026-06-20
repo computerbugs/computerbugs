@@ -1,6 +1,5 @@
 package com.example.changtest.controller;
 
-import com.example.changtest.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +11,10 @@ public class MainController {
 
     @GetMapping("/main")
     public String mainPage(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("username", user.getUsername());
+        // 从 session 中读取 username（不再存储整个 User 实体，避免密码 hash 泄漏）
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            model.addAttribute("username", username);
         }
         return "main";
     }

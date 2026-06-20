@@ -18,6 +18,18 @@ public class DatabaseMigration {
     @Transactional
     public void fixCreatedAtColumn() {
         try {
+            // 检查 created_at 列是否已经是正确的 TIMESTAMP 类型，避免每次启动都执行 DROP/ADD
+            java.util.List<?> results = entityManager.createNativeQuery(
+                "SELECT data_type FROM information_schema.columns " +
+                "WHERE table_name = 'users' AND column_name = 'created_at'"
+            ).getResultList();
+
+            String currentType = (!results.isEmpty()) ? results.get(0).toString() : null;
+            if ("timestamp without time zone".equals(currentType)) {
+                System.out.println(">>> created_at column is already TIMESTAMP, skipping migration");
+                return;
+            }
+
             // created_at 列在数据库中为 bytea 类型（存储了 Java 序列化对象），无法直接 ALTER TYPE
             // 需要先删除再重建为 TIMESTAMP
             entityManager.createNativeQuery(

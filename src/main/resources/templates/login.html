@@ -109,6 +109,7 @@
         </div>
 
         <form method="post" action="/login">
+            <input type="hidden" name="_csrf" th:value="${csrfToken}" />
             <div class="form-group">
                 <label for="username">用户名</label>
                 <input type="text" id="username" name="username" required="required" autocomplete="username"

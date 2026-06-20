@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public void register(String username, String rawPassword) {
         if (username == null || username.trim().isEmpty()) {

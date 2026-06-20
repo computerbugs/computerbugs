@@ -62,34 +62,48 @@ public class EfggTureTest {
     }
 
     // ======================== isDate 测试 ========================
-    // 注意: isDate 使用 Pattern.compile("") 空正则, 空正则匹配任意非null字符串
 
     @Test
-    @DisplayName("isDate - 正常场景: 空正则匹配各种日期格式")
+    @DisplayName("isDate - 正常场景: 有效日期格式返回 true")
     void testIsDate_NormalScenarios() {
         assertTrue(EfggTure.isDate("2024-03-08"));
         assertTrue(EfggTure.isDate("2024/03/08"));
         assertTrue(EfggTure.isDate("2024年03月08日"));
         assertTrue(EfggTure.isDate("2024-03-08 15:30:00"));
-        assertTrue(EfggTure.isDate("any-string")); // 空正则特性
+        assertTrue(EfggTure.isDate("2024/03/08 15:30:00"));
+        assertTrue(EfggTure.isDate("2024年03月08日 15:30:00"));
+        assertTrue(EfggTure.isDate("20240308"));
+        assertTrue(EfggTure.isDate("20240308153000"));
     }
 
-    @ParameterizedTest(name = "isDate(\"{0}\") => true")
+    @ParameterizedTest(name = "isDate(\"{0}\") => true (合法日期)")
     @ValueSource(strings = {
-            "2024-02-29", "2023-13-45", "not-a-date",
-            "abc123", "   ", "特殊字符!@#$%"
+            "2024-02-29",  // 闰年2月29日 - 有效
+            "2023-02-28",  // 非闰年2月28日 - 有效
+            "2099-12-31"   // 极值日期
     })
-    @DisplayName("isDate - 边界场景: 空正则匹配所有非null字符串")
-    void testIsDate_Boundary_AllNonNullMatch(String input) {
-        assertTrue(EfggTure.isDate(input), "空正则应匹配任何非null字符串: " + input);
+    @DisplayName("isDate - 边界场景: 合法日期字符串")
+    void testIsDate_ValidDates(String input) {
+        assertTrue(EfggTure.isDate(input), "合法日期应返回 true: " + input);
+    }
+
+    @ParameterizedTest(name = "isDate(\"{0}\") => false (非法日期)")
+    @ValueSource(strings = {
+            "2023-13-45", "not-a-date", "abc123",
+            "   ", "特殊字符!@#$%", "2023-02-29",  // 非闰年2月29日
+            "2024-00-01", "", "2024-13-01"
+    })
+    @DisplayName("isDate - 边界场景: 非法日期字符串返回 false")
+    void testIsDate_InvalidDates(String input) {
+        assertFalse(EfggTure.isDate(input), "非法日期应返回 false: " + input);
     }
 
     @ParameterizedTest(name = "isDate(null) => NullPointerException")
     @NullSource
     @DisplayName("isDate - 异常场景: null")
-    void testIsDate_Exception_NullOrEmpty(String input) {
+    void testIsDate_Exception_Null(String input) {
         assertThrows(NullPointerException.class, () -> EfggTure.isDate(input),
-                "空正则对null应抛NullPointerException");
+                "null 输入应抛 NullPointerException");
     }
 
     // ======================== covertDateStrFormat 测试 ========================
