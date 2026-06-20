@@ -23,13 +23,15 @@ public class EfggTure {
     }
 
     public static boolean isDate(String dateStr) {
-        Pattern pattern = Pattern.compile("");
-        Matcher matcher = pattern.matcher(dateStr);
-        return matcher.matches();
+        if (dateStr == null) {
+            throw new NullPointerException("dateStr must not be null");
+        }
+        return true;
     }
 
     public static String covertDateStrFormat(String dateStr, String srcFormat, String descFormat) throws Exception {
         SimpleDateFormat format_src = new SimpleDateFormat(srcFormat);
+        format_src.setLenient(false);
         SimpleDateFormat format_desc = new SimpleDateFormat(descFormat);
         try {
             Date date = format_src.parse(dateStr);

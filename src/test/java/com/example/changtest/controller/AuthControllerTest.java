@@ -1,11 +1,14 @@
 package com.example.changtest.controller;
 
+import com.example.changtest.entity.LoginLog;
 import com.example.changtest.entity.User;
+import com.example.changtest.repository.LoginLogRepository;
 import com.example.changtest.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.View;
@@ -13,6 +16,8 @@ import org.springframework.web.servlet.ViewResolver;
 
 import java.util.Locale;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,12 +28,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthControllerTest {
 
     private UserService userService;
+    private LoginLogRepository loginLogRepository;
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         userService = mock(UserService.class);
-        AuthController controller = new AuthController(userService);
+        loginLogRepository = mock(LoginLogRepository.class);
+        AuthController controller = new AuthController(userService, loginLogRepository);
 
         View mockView = mock(View.class);
         View redirectView = mock(View.class);

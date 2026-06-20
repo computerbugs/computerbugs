@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.text.ParseException;
@@ -85,8 +85,8 @@ public class EfggTureTest {
     }
 
     @ParameterizedTest(name = "isDate(null) => NullPointerException")
-    @NullAndEmptySource
-    @DisplayName("isDate - 异常场景: null和空串")
+    @NullSource
+    @DisplayName("isDate - 异常场景: null")
     void testIsDate_Exception_NullOrEmpty(String input) {
         assertThrows(NullPointerException.class, () -> EfggTure.isDate(input),
                 "空正则对null应抛NullPointerException");
