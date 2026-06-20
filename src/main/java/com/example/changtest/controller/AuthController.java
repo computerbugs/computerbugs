@@ -46,6 +46,7 @@ public class AuthController {
         String sessionToken = (String) session.getAttribute(CSRF_TOKEN_ATTR);
         if (sessionToken == null || !sessionToken.equals(csrfToken)) {
             model.addAttribute("loginError", "请求无效，请刷新页面后重试");
+            model.addAttribute("csrfToken", sessionToken);
             return "login";
         }
 
@@ -77,6 +78,7 @@ public class AuthController {
         loginLogRepository.save(log);
         model.addAttribute("loginError", "用户名或密码错误");
         model.addAttribute("username", username);
+        model.addAttribute("csrfToken", session.getAttribute(CSRF_TOKEN_ATTR));
         return "login";
     }
 
@@ -100,12 +102,14 @@ public class AuthController {
         String sessionToken = (String) session.getAttribute(CSRF_TOKEN_ATTR);
         if (sessionToken == null || !sessionToken.equals(csrfToken)) {
             model.addAttribute("registerError", "请求无效，请刷新页面后重试");
+            model.addAttribute("csrfToken", sessionToken);
             return "register";
         }
 
         if (!password.equals(confirmPassword)) {
             model.addAttribute("registerError", "两次输入的密码不一致");
             model.addAttribute("username", username);
+            model.addAttribute("csrfToken", session.getAttribute(CSRF_TOKEN_ATTR));
             return "register";
         }
         try {
@@ -113,6 +117,7 @@ public class AuthController {
         } catch (IllegalArgumentException e) {
             model.addAttribute("registerError", e.getMessage());
             model.addAttribute("username", username);
+            model.addAttribute("csrfToken", session.getAttribute(CSRF_TOKEN_ATTR));
             return "register";
         }
         return "redirect:/login?registered";

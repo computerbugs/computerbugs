@@ -172,7 +172,8 @@ public class AuthControllerTest {
                     .andExpect(view().name("login"))
                     .andExpect(model().attributeExists("loginError"))
                     .andExpect(model().attribute("loginError", "用户名或密码错误"))
-                    .andExpect(model().attribute("username", "testuser"));
+                    .andExpect(model().attribute("username", "testuser"))
+                    .andExpect(model().attributeExists("csrfToken"));
 
             // 验证记录了失败日志
             assertFalse(savedLogs.isEmpty(), "应记录 LoginLog");
